@@ -5,10 +5,14 @@ import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
 
+/**
+ * @author duke
+ */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
 @Import(WebConfigurer.class)
 public @interface EnableRequestInterceptor {
+    Class<?>[] value();
 }
