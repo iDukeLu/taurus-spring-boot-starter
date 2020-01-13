@@ -1,34 +1,32 @@
 package com.idukelu.starters.taurus.spring.boot.starter.configuration;
 
-import com.idukelu.starters.taurus.spring.boot.starter.interceptor.ConversationInfoRequestInterceptor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.Map;
+
 @Configuration
-public class WebConfigurer implements WebMvcConfigurer {
+public class WebConfigurer implements WebMvcConfigurer, ApplicationContextAware {
 
-    private InterceptorRegistry registry;
-
-    private ConversationInfoRequestInterceptor conversationInfoRequestInterceptor;
-
-    @Autowired(required = false)
-    public WebConfigurer(ConversationInfoRequestInterceptor conversationInfoRequestInterceptor) {
-        this.conversationInfoRequestInterceptor = conversationInfoRequestInterceptor;
-    }
+    private ApplicationContext applicationContext;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        this.registry = registry;
-        doAddInterceptors(conversationInfoRequestInterceptor);
+        Map<String, HandlerInterceptor> interceptors = applicationContext.getBeansOfType(HandlerInterceptor.class);
+        for (Map.Entry<String, HandlerInterceptor> entry : interceptors.entrySet()) {
+            System.err.println(entry.getKey());
+            registry.addInterceptor(entry.getValue());
+        }
     }
 
-    private void doAddInterceptors(HandlerInterceptor interceptor) {
-        if (interceptor != null) {
-            registry.addInterceptor(interceptor);
-        }
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
     }
 }
 

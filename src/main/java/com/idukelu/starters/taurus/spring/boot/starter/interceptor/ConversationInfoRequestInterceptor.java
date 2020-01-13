@@ -17,6 +17,10 @@ public class ConversationInfoRequestInterceptor implements HandlerInterceptor {
     private ThreadLocal<Instant> start = new ThreadLocal<>();
     private ThreadLocal<Instant> end = new ThreadLocal<>();
 
+    public ConversationInfoRequestInterceptor() {
+        log.debug("register success: {}", this.getClass().getName());
+    }
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         start.set(Instant.now());
@@ -26,7 +30,8 @@ public class ConversationInfoRequestInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable ModelAndView modelAndView) throws Exception {
         end.set(Instant.now());
-        String requestUrl = UrlUtils.getConversationInfo(request, response);
-        log.info("RequestURL: {} | {} ms", requestUrl.intern(), Duration.between(start.get(), end.get()).toMillis());
+        log.info("RequestURL: {} | {} ms",
+                UrlUtils.getConversationInfo(request, response),
+                Duration.between(start.get(), end.get()).toMillis());
     }
 }
