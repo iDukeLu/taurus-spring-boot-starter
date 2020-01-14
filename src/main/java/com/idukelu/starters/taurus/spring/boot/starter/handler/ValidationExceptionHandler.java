@@ -16,7 +16,6 @@ public class ValidationExceptionHandler {
     @ResponseBody
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public Response<String> ValidExceptionHandler(HttpServletRequest request, Exception e) {
-
         String eMessage = e.getMessage();
         String message = eMessage.substring(eMessage.lastIndexOf("[") + 1, eMessage.lastIndexOf("]") - 1);
         StringBuffer requestURL = request.getRequestURL();
