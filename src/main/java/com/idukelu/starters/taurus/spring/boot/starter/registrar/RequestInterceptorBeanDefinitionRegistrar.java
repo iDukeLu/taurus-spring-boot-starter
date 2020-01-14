@@ -12,6 +12,9 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.util.Map;
 
+/**
+ * @author duke
+ */
 public class RequestInterceptorBeanDefinitionRegistrar implements ImportBeanDefinitionRegistrar {
 
     @Override

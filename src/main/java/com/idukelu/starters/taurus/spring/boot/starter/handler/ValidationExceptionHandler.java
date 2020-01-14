@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @author duke
+ */
 @Slf4j
 @ControllerAdvice
 public class ValidationExceptionHandler {

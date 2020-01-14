@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 /**
  * 接口返回的响应，由状态码 code，信息 msg，数据 data 三部分构成，
  * code 和 msg 统称 status，由 Status 管理并制定相关状态
- *
- *  @param <T> 返回数据的类型
+ * @param <T> 返回数据的类型
+ * @author duke
  */
 @Data
 @NoArgsConstructor
