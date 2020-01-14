@@ -12,12 +12,12 @@ import java.time.Duration;
 import java.time.Instant;
 
 @Slf4j
-public class ConversationInfoRequestInterceptor implements HandlerInterceptor {
+public class AccessRequestInterceptor implements HandlerInterceptor {
 
     private ThreadLocal<Instant> start = new ThreadLocal<>();
     private ThreadLocal<Instant> end = new ThreadLocal<>();
 
-    public ConversationInfoRequestInterceptor() {
+    public AccessRequestInterceptor() {
         log.debug("register success: {}", this.getClass().getName());
     }
 
