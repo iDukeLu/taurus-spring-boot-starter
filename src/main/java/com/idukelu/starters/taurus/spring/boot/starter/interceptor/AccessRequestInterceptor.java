@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.time.Duration;
 import java.time.Instant;
 
+/**
+ * @author duke
+ */
 @Slf4j
 public class AccessRequestInterceptor implements HandlerInterceptor {
 

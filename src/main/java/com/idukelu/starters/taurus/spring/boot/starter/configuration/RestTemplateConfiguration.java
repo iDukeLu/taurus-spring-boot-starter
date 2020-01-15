@@ -9,6 +9,9 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * @author duke
+ */
 @Configuration
 @ConditionalOnClass(RestTemplate.class)
 @ConditionalOnMissingBean(RestTemplate.class)

@@ -3,6 +3,9 @@ package com.idukelu.starters.taurus.spring.boot.starter.selector;
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.type.AnnotationMetadata;
 
+/**
+ * @author duke
+ */
 public class LogConfigurationImportSelector implements ImportSelector {
 
     private static final String LOG_CHANGER_CLASS = "com.idukelu.starters.taurus.spring.boot.starter.configuration.LogChanger";

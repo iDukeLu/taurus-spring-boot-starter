@@ -12,6 +12,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Map;
 
+/**
+ * @author duke
+ */
 @Slf4j
 @Configuration
 public class WebConfigurer implements WebMvcConfigurer, ApplicationContextAware {
