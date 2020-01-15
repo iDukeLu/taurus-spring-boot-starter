@@ -26,7 +26,9 @@ public class WebConfigurer implements WebMvcConfigurer, ApplicationContextAware 
         Map<String, HandlerInterceptor> interceptors = applicationContext.getBeansOfType(HandlerInterceptor.class);
         for (Map.Entry<String, HandlerInterceptor> interceptor : interceptors.entrySet()) {
             registry.addInterceptor(interceptor.getValue());
-            log.debug("Add Request Interceptor '{}'", interceptor.getKey());
+            if (log.isDebugEnabled()) {
+                log.debug("Add Request Interceptor '{}'", interceptor.getKey());
+            }
         }
     }
 

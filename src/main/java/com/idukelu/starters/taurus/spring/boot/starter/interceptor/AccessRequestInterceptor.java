@@ -21,7 +21,9 @@ public class AccessRequestInterceptor implements HandlerInterceptor {
     private ThreadLocal<Instant> end = new ThreadLocal<>();
 
     public AccessRequestInterceptor() {
-        log.debug("register success: {}", this.getClass().getName());
+        if (log.isDebugEnabled()) {
+            log.debug("register success: {}", this.getClass().getName());
+        }
     }
 
     @Override
