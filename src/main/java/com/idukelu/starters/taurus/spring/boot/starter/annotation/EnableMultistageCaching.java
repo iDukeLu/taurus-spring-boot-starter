@@ -1,6 +1,6 @@
 package com.idukelu.starters.taurus.spring.boot.starter.annotation;
 
-import com.idukelu.starters.taurus.spring.boot.starter.interceptor.AccessRequestInterceptor;
+import org.springframework.cache.annotation.EnableCaching;
 
 import java.lang.annotation.*;
 
@@ -11,6 +11,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-@EnableRequestInterceptor(AccessRequestInterceptor.class)
-public @interface EnableAccessRequestInterceptor {
+@EnableCaching
+public @interface EnableMultistageCaching {
 }
