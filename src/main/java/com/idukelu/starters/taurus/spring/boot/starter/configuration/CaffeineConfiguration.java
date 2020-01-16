@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -26,12 +27,13 @@ public class CaffeineConfiguration {
     @Primary
     public CacheManager caffeineCacheManager() {
         SimpleCacheManager cacheManager = new SimpleCacheManager();
-        cacheManager.setCaches(Arrays.stream(CaffeineCaches.values())
+        List<CaffeineCache> caffeineCaches = Arrays.stream(CaffeineCaches.values())
                 .map(c -> new CaffeineCache(c.name(),
                         Caffeine.newBuilder().recordStats()
                                 .maximumSize(c.getMaxSize())
                                 .expireAfterAccess(c.getTtl(), TimeUnit.SECONDS)
-                                .build())).collect(Collectors.toList()));
+                                .build())).collect(Collectors.toList());
+        cacheManager.setCaches(caffeineCaches);
         return cacheManager;
     }
 }
