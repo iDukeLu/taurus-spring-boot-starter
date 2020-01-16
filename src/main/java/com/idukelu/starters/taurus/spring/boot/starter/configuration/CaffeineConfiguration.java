@@ -2,6 +2,7 @@ package com.idukelu.starters.taurus.spring.boot.starter.configuration;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.idukelu.starters.taurus.spring.boot.starter.constant.CaffeineCaches;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.caffeine.CaffeineCache;
 import org.springframework.cache.support.SimpleCacheManager;
@@ -14,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Configuration
+@ConditionalOnClass({CaffeineCache.class, CacheManager.class})
 public class CaffeineConfiguration {
 
     /**
