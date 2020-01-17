@@ -9,6 +9,4 @@ public class CacheConstants {
     public static final int DEFAULT_MAX_SIZE = 10_000;
 
     public static final int DEFAULT_EXPIRE_TIME = 10;
-
-    public static final int DEFAULT_REFRESH_TIME = 5;
 }
