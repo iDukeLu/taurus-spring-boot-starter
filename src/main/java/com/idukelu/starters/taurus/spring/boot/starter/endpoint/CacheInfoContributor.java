@@ -4,9 +4,8 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.stats.CacheStats;
 import com.idukelu.starters.taurus.spring.boot.starter.constant.CacheConstants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
-import org.springframework.boot.actuate.endpoint.web.annotation.WebEndpoint;
 import org.springframework.boot.actuate.info.Info;
+import org.springframework.boot.actuate.info.InfoContributor;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.caffeine.CaffeineCache;
 import org.springframework.stereotype.Component;
@@ -14,15 +13,13 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 
 @Component
-@WebEndpoint(id = "caffeine")
-public class CacheEndpoint {
+public class CacheInfoContributor implements InfoContributor {
 
     @Autowired
     CacheManager cacheManager;
 
-    @ReadOperation
-    public Info cache() {
-        Info.Builder builder = new Info.Builder();
+    @Override
+    public void contribute(Info.Builder builder) {
         CaffeineCache caffeineCache = (CaffeineCache) cacheManager.getCache(CacheConstants.CAFFEINE);
         if (caffeineCache != null) {
             Cache<Object, Object> cache = caffeineCache.getNativeCache();
@@ -43,8 +40,5 @@ public class CacheEndpoint {
             stats.put("缓存驱逐权重", cacheStats.evictionWeight());
             builder.withDetail(CacheConstants.CAFFEINE, stats);
         }
-
-
-        return builder.build();
     }
 }
