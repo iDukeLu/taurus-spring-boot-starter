@@ -5,6 +5,7 @@ import com.idukelu.starters.taurus.spring.boot.starter.constant.CacheConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.caffeine.CaffeineCache;
 import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Configuration
+@EnableCaching
 @ConditionalOnClass({CaffeineCache.class, CacheManager.class})
 public class CaffeineConfiguration {
 
