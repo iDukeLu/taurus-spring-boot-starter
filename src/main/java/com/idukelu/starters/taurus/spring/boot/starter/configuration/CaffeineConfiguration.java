@@ -36,7 +36,30 @@ public class CaffeineConfiguration {
                 .maximumSize(CacheConstants.DEFAULT_MAX_SIZE)
                 .expireAfterAccess(CacheConstants.DEFAULT_EXPIRE_TIME, TimeUnit.SECONDS)
                 .softValues()
-                .recordStats();
+                .recordStats()
+                .removalListener((key, value, cause) -> {
+                    log.info("{} - 缓存{} | key: {}", CacheConstants.CAFFEINE, getCause(cause.name()), key);
+                    if (log.isDebugEnabled()) {
+                        log.info("{} - 缓存{} | key: {}", CacheConstants.CAFFEINE, getCause(cause.name()), key);
+                    }
+                });
+    }
+
+    private String getCause(String cause) {
+        switch (cause.toUpperCase()) {
+            case "COLLECTED":
+                return "垃圾回收淘汰";
+            case "EXPIRED":
+                return "过期淘汰";
+            case "EXPLICIT":
+                return "手动淘汰";
+            case "REPLACED":
+                return "更新淘汰";
+            case "SIZE":
+                return "最大容量淘汰";
+            default:
+                return "未知策略淘汰";
+        }
     }
 }
 
