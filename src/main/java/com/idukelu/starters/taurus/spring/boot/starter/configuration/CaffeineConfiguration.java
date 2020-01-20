@@ -40,7 +40,7 @@ public class CaffeineConfiguration {
                 .removalListener((key, value, cause) -> {
                     log.info("{} - 缓存{} | key: {}", CacheConstants.CAFFEINE, getCause(cause.name()), key);
                     if (log.isDebugEnabled()) {
-                        log.info("{} - 缓存{} | key: {}", CacheConstants.CAFFEINE, getCause(cause.name()), key);
+                        log.debug("{} - 缓存{} | key: {}", CacheConstants.CAFFEINE, getCause(cause.name()), key);
                     }
                 });
     }
