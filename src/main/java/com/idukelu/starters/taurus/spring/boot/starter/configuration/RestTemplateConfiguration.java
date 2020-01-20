@@ -10,6 +10,7 @@ import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 /**
+ *
  * @author duke
  */
 @Configuration
@@ -17,18 +18,18 @@ import org.springframework.web.client.RestTemplate;
 @ConditionalOnMissingBean(RestTemplate.class)
 public class RestTemplateConfiguration {
 
-    @Bean()
+    @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         return builder.build();
     }
 
-    @Bean()
+    @Bean
     @ConditionalOnClass(OkHttp3ClientHttpRequestFactory.class)
     public RestTemplate ok3RestTemplate(RestTemplateBuilder builder) {
         return builder.requestFactory(OkHttp3ClientHttpRequestFactory.class).build();
     }
 
-    @Bean()
+    @Bean
     @ConditionalOnClass(HttpComponentsClientHttpRequestFactory.class)
     public RestTemplate apacheRestTemplate(RestTemplateBuilder builder) {
        return builder.requestFactory(HttpComponentsClientHttpRequestFactory.class).build();

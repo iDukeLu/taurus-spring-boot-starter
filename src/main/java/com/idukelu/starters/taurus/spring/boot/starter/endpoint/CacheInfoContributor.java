@@ -3,23 +3,28 @@ package com.idukelu.starters.taurus.spring.boot.starter.endpoint;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.stats.CacheStats;
 import com.idukelu.starters.taurus.spring.boot.starter.constant.CacheConstants;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.info.Info;
 import org.springframework.boot.actuate.info.InfoContributor;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.caffeine.CaffeineCache;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 
-@Component
-public class CacheInfoContributor implements InfoContributor {
+/**
+ * @author duke
+ */
+public class CacheInfoContributor implements InfoContributor, ApplicationContextAware {
 
-    @Autowired
-    CacheManager cacheManager;
+    private ApplicationContext applicationContext;
 
     @Override
     public void contribute(Info.Builder builder) {
+        CacheManager cacheManager = applicationContext.getBean(CacheManager.class);
         CaffeineCache caffeineCache = (CaffeineCache) cacheManager.getCache(CacheConstants.CAFFEINE);
         if (caffeineCache != null) {
             Cache<Object, Object> cache = caffeineCache.getNativeCache();
@@ -40,5 +45,10 @@ public class CacheInfoContributor implements InfoContributor {
             stats.put("缓存驱逐权重", cacheStats.evictionWeight());
             builder.withDetail(CacheConstants.CAFFEINE, stats);
         }
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
     }
 }

@@ -1,6 +1,7 @@
 package com.idukelu.starters.taurus.spring.boot.starter.configuration;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
+import com.github.benmanes.caffeine.cache.RemovalCause;
 import com.idukelu.starters.taurus.spring.boot.starter.constant.CacheConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -13,6 +14,11 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.concurrent.TimeUnit;
 
+
+/**
+ * 基于 Caffeine 的缓存配置
+ * @author duke
+ */
 @Slf4j
 @Configuration
 @EnableCaching
@@ -30,7 +36,11 @@ public class CaffeineConfiguration {
         return cacheManager;
     }
 
-    private Caffeine<Object, Object> caffeineCache() {
+    /**
+     * caffeine 缓存配置
+     * @return caffeine 缓存
+     */
+    public Caffeine<Object, Object> caffeineCache() {
         return Caffeine.newBuilder()
                 .initialCapacity(CacheConstants.DEFAULT_INIT_SIZE)
                 .maximumSize(CacheConstants.DEFAULT_MAX_SIZE)
@@ -38,15 +48,20 @@ public class CaffeineConfiguration {
                 .softValues()
                 .recordStats()
                 .removalListener((key, value, cause) -> {
-                    log.info("{} - 缓存{} | key: {}", CacheConstants.CAFFEINE, getCause(cause.name()), key);
+                    log.info("{} - 缓存{} | key: {}", CacheConstants.CAFFEINE, getCause(cause), key);
                     if (log.isDebugEnabled()) {
-                        log.debug("{} - 缓存{} | key: {}", CacheConstants.CAFFEINE, getCause(cause.name()), key);
+                        log.debug("{} - 缓存{} | key: {}", CacheConstants.CAFFEINE, getCause(cause), key);
                     }
                 });
     }
 
-    private String getCause(String cause) {
-        switch (cause.toUpperCase()) {
+    /**
+     * 获取缓存淘汰原因
+     * @param cause 淘汰原因枚举
+     * @return 缓存淘汰原因
+     */
+    private String getCause(RemovalCause cause) {
+        switch (cause.name().toUpperCase()) {
             case "COLLECTED":
                 return "垃圾回收淘汰";
             case "EXPIRED":
